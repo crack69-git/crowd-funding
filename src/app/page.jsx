@@ -1,11 +1,12 @@
-import NavbarSection from "@/components/mainpage/NavbarSection";
+import HeroSection from "@/components/mainpage/HeroSection";
+import TopCampaigns from "@/components/mainpage/TopCampaigns";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div>
-      <NavbarSection />
-      this is homepage
+      <HeroSection />
+      <TopCampaigns />
     </div>
   );
 }
