@@ -23,13 +23,17 @@ const HeroSection = () => {
             <Button variant="outline">Explore Campaigns</Button>
           </div>
         </div>
-        <div>
+        <div className="relative">
           <Image
             src="/hero_image.png"
             width={1400}
             height={1400}
             alt="Hero Image"
           ></Image>
+          <div className="absolute bottom-0 right-0  p-4 shadow-lg rounded-2xl bg-emerald-700 text-white">
+            <p className="text-2xl font-bold">100+</p>
+            <p className="text-gray-300">Active Campaigns</p>
+          </div>
         </div>
       </div>
     </div>
