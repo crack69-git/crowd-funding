@@ -4,8 +4,7 @@ import Link from "next/link";
 export default function FooterSection() {
   return (
     <footer className="bg-[#1e293b] text-white py-8 px-6 sm:px-10 lg:px-12">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        {/* Left Side: Logo & Copyright */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="space-y-2">
           <h3 className="text-2xl font-bold text-emerald-400 tracking-tight">
             Crowdfundly
