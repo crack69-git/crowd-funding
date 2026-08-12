@@ -1,2 +1,22 @@
 @import "tailwindcss";
 @import "@heroui/styles";
+
+.custom-shape-divider-bottom-1786504137 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-bottom-1786504137 svg {
+    position: relative;
+    display: block;
+    width: calc(134% + 1.3px);
+    height: 189px;
+}
+
+.custom-shape-divider-bottom-1786504137 .shape-fill {
+    fill: #FFFFFF;
+}
