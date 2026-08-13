@@ -9,8 +9,8 @@ const SideBar = () => {
       <Link href="/dashboard/creator">Home</Link>
       <Link href="/dashboard/creator/add-campaign">Add New Campaign</Link>
       <Link href="/dashboard/creator/my-campaigns">My Campaigns</Link>
-      <Link href="/dashboard/creator">Withdrawals</Link>
-      <Link href="/dashboard/creator">Payment History</Link>
+      <Link href="/dashboard/creator/withdrawals">Withdrawals</Link>
+      <Link href="/dashboard/creator/payment-history">Payment History</Link>
     </>
   );
   return (
