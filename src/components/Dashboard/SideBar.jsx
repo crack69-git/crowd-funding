@@ -13,11 +13,20 @@ const SideBar = () => {
       <Link href="/dashboard/creator/payment-history">Payment History</Link>
     </>
   );
+  const supporter = (
+    <>
+      <Link href="/dashboard/supporter">Home</Link>
+      <Link href="/dashboard/supporter/explore-campaign">Explore Campaign</Link>
+      <Link href="/dashboard/supporter/my-contributions">My Contributions</Link>
+      <Link href="/dashboard/supporter/purchase-credit">Purchase Credit</Link>
+      <Link href="/dashboard/supporter/payment-history">Payment History</Link>
+    </>
+  );
   return (
     <div className="flex flex-col  h-11/12 p-4 bg-gray-100 ">
       <h3 className="text-xl text-green-800 font-bold">Dashboard</h3>
       <div className="flex flex-col items-start mt-5 space-y-5 flex-grow">
-        {creator}
+        {supporter}
       </div>
       <div>
         <Button variant="primary" className="bg-green-700 w-full">
