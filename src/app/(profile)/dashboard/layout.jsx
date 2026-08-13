@@ -3,11 +3,11 @@ import React from "react";
 
 const layout = ({ children }) => {
   return (
-    <div className="flex gap-4">
-      <aside className="w-64 h-screen bg-gray-100 p-4">
+    <div className="flex">
+      <aside className="w-64 h-screen bg-gray-100 border-r">
         <SideBar></SideBar>
       </aside>
-      <main>{children}</main>
+      <main className="flex-1 ">{children}</main>
     </div>
   );
 };
