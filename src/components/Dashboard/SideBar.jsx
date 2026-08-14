@@ -22,11 +22,23 @@ const SideBar = () => {
       <Link href="/dashboard/supporter/payment-history">Payment History</Link>
     </>
   );
+
+  const admin = (
+    <>
+      <Link href="/dashboard/admin">Home</Link>
+      <Link href="/dashboard/admin/manage-users">Manage Users</Link>
+      <Link href="/dashboard/admin/manage-campaigns">Manage Campaigns</Link>
+      <Link href="/dashboard/admin/withdrawals-request">
+        Withdrawals Request{" "}
+      </Link>
+      <Link href="/dashboard/admin/reports">Reports</Link>
+    </>
+  );
   return (
     <div className="flex flex-col  h-11/12 p-4 bg-gray-100 ">
       <h3 className="text-xl text-green-800 font-bold">Dashboard</h3>
       <div className="flex flex-col items-start mt-5 space-y-5 flex-grow">
-        {supporter}
+        {admin}
       </div>
       <div>
         <Button variant="primary" className="bg-green-700 w-full">
