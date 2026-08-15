@@ -22,7 +22,7 @@ export default function LoginPage() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const res = Object.fromEntries(formData.entries());
-    console.log(res);
+
     const { data, error } = await authClient.signIn.email({
       email: res.email,
       password: res.password,

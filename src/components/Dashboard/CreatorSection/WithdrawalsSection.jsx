@@ -19,7 +19,6 @@ const WithdrawalsSection = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
-    console.log("Form Submitted Data:", data);
   };
   return (
     <div className="grid grid-cols-3 grid-rows-2 gap-5 w-full">

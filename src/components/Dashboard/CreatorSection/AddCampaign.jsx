@@ -17,20 +17,26 @@ import {
   Chip,
 } from "@heroui/react";
 import React, { useState } from "react";
+import AddTier from "./AddTier";
+import { postCampaign } from "@/lib/actions/postSection";
+import { useRouter } from "next/navigation";
 
-const AddCampaign = () => {
-  // Separate state for each controlled text area
-  const [bio, setBio] = useState("this is descriptopm");
-  const [rewardDetails, setRewardDetails] = useState("this is descriptopm");
+const AddCampaign = ({ tiers }) => {
   const limit = 5000;
-
-  const onSubmit = (e) => {
+  const router = useRouter();
+  const onSubmit = async (e) => {
     e.preventDefault();
-    // Native HTML Form submission handling
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-
     console.log("Form Submitted Data:", data);
+    const res = await postCampaign(data);
+    console.log(res);
+    if (res.acknowledged) {
+      alert("Campaign posted successfully");
+      router.refresh();
+    } else {
+      alert("Failed to post campaign");
+    }
   };
 
   const categoryItem = (
@@ -139,13 +145,13 @@ const AddCampaign = () => {
           <div>
             <TextField
               isRequired
-              name="totalAmount"
+              name="fundingGoal"
               type="number"
               className="mb-4"
               defaultValue="1000"
             >
-              <Label>Total Amount</Label>
-              <Input placeholder="Enter total amount" />
+              <Label>Funding Goal</Label>
+              <Input placeholder="Enter funding goal" />
               <FieldError />
             </TextField>
             <TextField
@@ -155,8 +161,8 @@ const AddCampaign = () => {
               className="mb-4"
               defaultValue="100"
             >
-              <Label>Minimum Amount</Label>
-              <Input placeholder="Enter minimum amount" />
+              <Label>Minimum Contribution</Label>
+              <Input placeholder="Enter minimum contribution" />
               <FieldError />
             </TextField>
           </div>
@@ -167,61 +173,72 @@ const AddCampaign = () => {
           <p className="font-semibold text-lg">The Story</p>
           <Separator className="my-4" />
           <TextField isRequired name="description">
-            <Label>Detailed Story & Mission</Label>
+            <Label>Campaign Story</Label>
             <TextArea
               placeholder="Tell about your mission..."
               className="h-34"
               maxLength={limit}
-              onChange={(e) => setBio(e.target.value)}
-              value={bio}
+              name="story"
             />
             <FieldError />
           </TextField>
-          <div className="text-right text-sm text-gray-400 mt-2">
-            {bio.length}/{limit}
-          </div>
+          <div className="text-right text-sm text-gray-400 mt-2">0/{limit}</div>
         </div>
 
         {/* Campaign Media & Rewards */}
         <div className="col-span-1 border-2 shadow-lg border-gray-200 rounded-lg p-4">
           <p className="font-semibold text-lg">Campaign</p>
           <Separator className="my-4" />
-          <TextField name="campaignImage">
-            <Label>Upload Image</Label>
-            <Input
-              type="file"
-              accept="image/*"
-              className="block w-full text-sm text-gray-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-full file:border-0
-                file:text-sm file:font-semibold
-                file:bg-blue-50 file:text-blue-700
-                hover:file:bg-blue-100"
-            />
+          <TextField
+            isRequired
+            name="campaignImage"
+            type="text"
+            className="mb-4"
+            defaultValue="1000"
+          >
+            <Label>Campaign Image URL</Label>
+            <Input placeholder="Enter image link" />
             <FieldError />
           </TextField>
           <TextField isRequired name="tier" type="text" className="mt-4">
             <div className="flex justify-between items-center">
               <Label>Reward</Label>
-              <Chip variant="secondary">Add Tier</Chip>
+              <AddTier />
             </div>
-            <p className="text-sm">Selected Tier: </p>
-            <TextArea
-              placeholder="More details about the reward..."
-              className="h-auto"
-              maxLength={limit}
-              onChange={(e) => setRewardDetails(e.target.value)}
-              value={rewardDetails}
-            />
+            <Select
+              className="w-full"
+              name="rewardTier"
+              placeholder="Select one"
+            >
+              <Label>Reward Tier</Label>
+              <Select.Trigger>
+                <Select.Value />
+                <Select.Indicator />
+              </Select.Trigger>
+              <Select.Popover>
+                <ListBox>
+                  {tiers.map((tier) => (
+                    <ListBox.Item
+                      key={tier._id}
+                      id={tier.tierName}
+                      textValue={tier.tierName}
+                    >
+                      {tier.tierName}
+                      <ListBox.ItemIndicator />
+                    </ListBox.Item>
+                  ))}
+                </ListBox>
+              </Select.Popover>
+            </Select>
             <FieldError />
           </TextField>
         </div>
       </div>
 
       <div className="flex gap-2">
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Post Campaign</Button>
         <Button type="reset" variant="secondary">
-          Reset
+          Reset Form
         </Button>
       </div>
     </Form>

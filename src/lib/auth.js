@@ -13,6 +13,9 @@ export const auth = betterAuth({
     enabled: true,
     rememberMe: true,
   },
+  session: {
+    expiresIn: 60 * 60 * 24 * 7,
+  },
   database: mongodbAdapter(db, {
     client,
   }),
