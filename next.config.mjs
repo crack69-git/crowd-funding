@@ -8,6 +8,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "ibb.co.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   reactCompiler: true,

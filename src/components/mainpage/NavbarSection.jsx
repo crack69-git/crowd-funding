@@ -20,9 +20,11 @@ const NavbarSection = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="" className="hover:bg-green-100">
-            Login
-          </Button>
+          <Link href="/login">
+            <Button variant="outline" className="hover:bg-green-100">
+              Login
+            </Button>
+          </Link>
           <Button variant="primary" className="bg-green-700">
             Join as Developer
           </Button>

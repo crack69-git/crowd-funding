@@ -9,20 +9,36 @@ import {
   Label,
   TextField,
   Form,
-  Dropdown,
   Radio,
   RadioGroup,
 } from "@heroui/react";
 import Link from "next/link";
 import { IoRocketOutline } from "react-icons/io5";
-import { FcGoogle } from "react-icons/fc";
-import { MdOutlineArrowDropDownCircle } from "react-icons/md";
-const page = () => {
-  const handleLogin = (e) => {
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+
+export default function LoginPage() {
+  const router = useRouter();
+  const handleLogin = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
+    const res = Object.fromEntries(formData.entries());
+    const { data, error } = await authClient.signUp.email({
+      name: res.username, // required
+      email: res.email, // required
+      password: res.password, // required
+      image: res.imageLink,
+      role: res.role,
+      callbackURL: "/login",
+    });
+    if (data) {
+      alert("Registration successful! ");
+      router.push("/login");
+    }
+    if (error) {
+      alert("Registration failed: " + error.message);
+      return;
+    }
   };
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-emerald-50/40 via-slate-50 to-blue-50/40 p-4">
@@ -53,7 +69,6 @@ const page = () => {
             isRequired
             name="email"
             type="email"
-            defaultValue="john@example.com"
             validate={(value) => {
               if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
                 return "Please enter a valid email address";
@@ -66,7 +81,7 @@ const page = () => {
             <FieldError />
           </TextField>
           <TextField isRequired name="imageLink" type="text">
-            <Label>Image URL</Label>
+            <Label>Image Link</Label>
             <Input placeholder="https://example.com/image.jpg" />
             <FieldError />
           </TextField>
@@ -75,7 +90,6 @@ const page = () => {
             minLength={8}
             name="password"
             type="password"
-            defaultValue="12345678"
             validate={(value) => {
               if (value.length < 8) {
                 return "Password must be at least 8 characters";
@@ -92,41 +106,37 @@ const page = () => {
             <FieldError />
           </TextField>
           <TextField>
-            <div className="flex flex-col gap-2">
-              <Label>Role</Label>
-              <RadioGroup
-                isRequired
-                defaultValue="pro"
-                name="role"
-                orientation="horizontal"
-                defaultValue="supporter"
-              >
-                <Radio value="supporter">
-                  <Radio.Content>
-                    <Radio.Control>
-                      <Radio.Indicator className="border rounded-full" />
-                    </Radio.Control>
-                    Supporter
-                  </Radio.Content>
-                </Radio>
-                <Radio value="creator">
-                  <Radio.Content>
-                    <Radio.Control>
-                      <Radio.Indicator className="border rounded-full" />
-                    </Radio.Control>
-                    Creator
-                  </Radio.Content>
-                </Radio>
-                <Radio value="admin">
-                  <Radio.Content>
-                    <Radio.Control>
-                      <Radio.Indicator className="border rounded-full" />
-                    </Radio.Control>
-                    Admin
-                  </Radio.Content>
-                </Radio>
-              </RadioGroup>
-            </div>
+            <Label>Role</Label>
+            <RadioGroup
+              defaultValue="supporter"
+              name="role"
+              orientation="horizontal"
+            >
+              <Radio value="supporter">
+                <Radio.Content>
+                  <Radio.Control>
+                    <Radio.Indicator className="border rounded-full" />
+                  </Radio.Control>
+                  Supporter
+                </Radio.Content>
+              </Radio>
+              <Radio value="Creator">
+                <Radio.Content>
+                  <Radio.Control>
+                    <Radio.Indicator className="border rounded-full" />
+                  </Radio.Control>
+                  Creator
+                </Radio.Content>
+              </Radio>
+              <Radio value="admin">
+                <Radio.Content>
+                  <Radio.Control>
+                    <Radio.Indicator className="border rounded-full" />
+                  </Radio.Control>
+                  Admin
+                </Radio.Content>
+              </Radio>
+            </RadioGroup>
           </TextField>
           <div className="flex gap-2">
             <Button type="submit" className="w-full bg-green-800">
@@ -143,7 +153,6 @@ const page = () => {
           </span>
         </div>
 
-        {/* Register Footer Link */}
         <div className="text-center text-xs font-medium text-slate-500">
           Already have an account?{" "}
           <Link
@@ -156,6 +165,4 @@ const page = () => {
       </Card>
     </div>
   );
-};
-
-export default page;
+}
