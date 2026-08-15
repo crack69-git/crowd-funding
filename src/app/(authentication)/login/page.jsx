@@ -13,13 +13,29 @@ import {
 import Link from "next/link";
 import { IoRocketOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
-  const handleLogin = (e) => {
+  const router = useRouter();
+  const handleLogin = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
+    const res = Object.fromEntries(formData.entries());
+    console.log(res);
+    const { data, error } = await authClient.signIn.email({
+      email: res.email,
+      password: res.password,
+      rememberMe: true,
+      callbackURL: "/",
+    });
+    if (data) {
+      alert("Login successful!");
+    }
+    if (error) {
+      alert("Login failed!");
+      return;
+    }
   };
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-emerald-50/40 via-slate-50 to-blue-50/40 p-4">
