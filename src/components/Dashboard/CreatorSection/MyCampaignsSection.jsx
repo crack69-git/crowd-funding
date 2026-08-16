@@ -22,7 +22,7 @@ const MyCampaignsSection = () => {
           <SearchField.ClearButton />
         </SearchField.Group>
       </SearchField>
-      <Select className="w-[256px]" placeholder="Select one">
+      <Select className="w-full" placeholder="Select one">
         <Label>State</Label>
         <Select.Trigger>
           <Select.Value />

@@ -21,15 +21,33 @@ import AddTier from "./AddTier";
 import { postCampaign } from "@/lib/actions/postSection";
 import { useRouter } from "next/navigation";
 
-const AddCampaign = ({ tiers }) => {
+const AddCampaign = ({ tiers, user }) => {
   const limit = 5000;
   const router = useRouter();
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    console.log("Form Submitted Data:", data);
-    const res = await postCampaign(data);
+
+    const campainData = {
+      campaignTitle: data.campaignTitle,
+      campaignCategory: data.campaignCategory,
+      deadline: data.deadline,
+      fundingGoal: data.fundingGoal,
+      minimumAmount: data.minimumAmount,
+      description: data.story,
+      campaignImage: data.campaignImage,
+      tier: data.rewardTier,
+      status: "active",
+      dateCreated: new Date().toLocaleDateString("en-CA"),
+      creatorId: user?.id,
+      CreatorName: user?.name,
+      CreatorEmail: user?.email,
+      CreatorImage: user?.image,
+    };
+    console.log("Campaign Data to be posted:", campainData);
+
+    const res = await postCampaign(campainData);
     console.log(res);
     if (res.acknowledged) {
       alert("Campaign posted successfully");
@@ -203,7 +221,6 @@ const AddCampaign = ({ tiers }) => {
           <TextField isRequired name="tier" type="text" className="mt-4">
             <div className="flex justify-between items-center">
               <Label>Reward</Label>
-              <AddTier />
             </div>
             <Select
               className="w-full"

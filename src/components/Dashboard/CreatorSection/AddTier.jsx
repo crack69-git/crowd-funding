@@ -10,32 +10,36 @@ import {
   Modal,
   TextField,
 } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaPlus, FaRankingStar } from "react-icons/fa6";
 
 const AddTier = () => {
-  const [open, setOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const router = useRouter();
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    console.log("Form Submitted Data:", data);
+
     const res = await postTier(data);
     console.log(res);
     if (res.acknowledged) {
       alert("Tier added successfully");
-      setOpen(false);
+      setIsOpen(false);
+      router.refresh();
     } else {
       alert("Failed to add tier");
+      return;
     }
   };
   return (
-    <Modal open={open} onOpenChange={setOpen}>
+    <Modal open={isOpen} onOpenChange={setIsOpen}>
       <Button
-        onClick={() => setOpen(true)}
+        onClick={() => setIsOpen(true)}
         variant="secondary"
         size="sm"
-        className=""
+        className="mb-5"
       >
         <FaPlus />
         Add Tier
