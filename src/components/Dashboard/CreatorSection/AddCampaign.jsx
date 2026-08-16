@@ -17,7 +17,7 @@ import {
   Chip,
 } from "@heroui/react";
 import React, { useState } from "react";
-import AddTier from "./AddTier";
+
 import { postCampaign } from "@/lib/actions/postSection";
 import { useRouter } from "next/navigation";
 
@@ -43,7 +43,6 @@ const AddCampaign = ({ tiers, user }) => {
       creatorId: user?.id,
       CreatorName: user?.name,
       CreatorEmail: user?.email,
-      CreatorImage: user?.image,
     };
     console.log("Campaign Data to be posted:", campainData);
 

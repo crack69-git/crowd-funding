@@ -26,6 +26,10 @@ export const auth = betterAuth({
         type: "string",
         input: true,
       },
+      credit: {
+        type: "number",
+        input: true,
+      },
     },
   },
 });

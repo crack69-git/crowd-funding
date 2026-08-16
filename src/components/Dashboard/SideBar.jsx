@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import React from "react";
 import { HiOutlineLogout } from "react-icons/hi";
+import LogoutButton from "./LogoutButton";
 
 const SideBar = async () => {
   const session = await auth.api.getSession({
@@ -51,10 +52,7 @@ const SideBar = async () => {
         {/* {creator} */}
       </div>
       <div>
-        <Button variant="primary" className="bg-green-700 w-full">
-          Logout
-          <HiOutlineLogout />
-        </Button>
+        <LogoutButton />
       </div>
     </div>
   );

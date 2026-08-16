@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import { Button } from "@heroui/react";
+import { Button, Chip } from "@heroui/react";
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +11,7 @@ const NavbarSection = async () => {
   });
   const user = session?.user;
   const role = user?.role;
-
+  const image = user?.image;
   return (
     <div className="border-b">
       <div className="flex justify-between items-center w-11/12 mx-auto py-5 ">
@@ -29,14 +29,15 @@ const NavbarSection = async () => {
         <div className="flex items-center gap-2">
           {user ? (
             <div className="flex items-center gap-2">
+              <Chip color="success">Credit: {user.credit}</Chip>
               <div className="w-10 h-10 rounded-full overflow-hidden border">
-                <Image
+                {/* <Image
                   loading="lazy"
-                  src={user?.imageLink || "/hero-image.png"}
+                  src={image}
                   alt="User Image"
                   width={40}
                   height={40}
-                />
+                /> */}
               </div>
               {role === "Creator" ? (
                 <Link href="/dashboard/creator">

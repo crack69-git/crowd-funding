@@ -23,12 +23,19 @@ export default function LoginPage() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const res = Object.fromEntries(formData.entries());
+    let credit = 0;
+    if (res.role === "supporter") {
+      credit = 50;
+    } else if (res.role === "Creator") {
+      credit = 20;
+    }
     const { data, error } = await authClient.signUp.email({
       name: res.username, // required
       email: res.email, // required
       password: res.password, // required
       image: res.imageLink,
       role: res.role,
+      credit: credit,
       callbackURL: "/login",
     });
     if (data) {

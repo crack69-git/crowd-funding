@@ -1,8 +1,17 @@
 import MyCampaignsSection from "@/components/Dashboard/CreatorSection/MyCampaignsSection";
+import { getCampaigns, getMyCampaigns } from "@/lib/actions/getSection";
+import { auth } from "@/lib/auth";
 import { Button, Card, Chip, Separator, Table } from "@heroui/react";
+import { headers } from "next/headers";
 import React from "react";
 
-const page = () => {
+const page = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const id = session?.user?.id;
+  const res = await getMyCampaigns(id);
+  console.log(res);
   return (
     <div className="w-11/12 mx-auto mt-5">
       <div className="flex justify-between items-center gap-5">
@@ -35,7 +44,6 @@ const page = () => {
             <Table.Content aria-label="Team members" className="min-w-full">
               <Table.Header>
                 <Table.Column isRowHeader>Campaign Title</Table.Column>
-
                 <Table.Column>Status</Table.Column>
                 <Table.Column>Goal</Table.Column>
                 <Table.Column>Amount Raised</Table.Column>
@@ -43,23 +51,29 @@ const page = () => {
                 <Table.Column>Action</Table.Column>
               </Table.Header>
               <Table.Body>
-                <Table.Row>
-                  <Table.Cell>Kate Moore</Table.Cell>
-                  <Table.Cell>Active/Funded</Table.Cell>
-                  <Table.Cell>$10000</Table.Cell>
-                  <Table.Cell>$5000</Table.Cell>
-                  <Table.Cell>2023-12-31</Table.Cell>
-                  <Table.Cell>
-                    <div className="flex gap-2">
-                      <Button variant="secondary" className="rounded-lg">
-                        Edit
-                      </Button>
-                      <Button variant="danger" className="rounded-lg">
-                        Delete
-                      </Button>
-                    </div>
-                  </Table.Cell>
-                </Table.Row>
+                {res?.map((item, index) => (
+                  <Table.Row key={index}>
+                    <Table.Cell>{item?.campaignTitle}</Table.Cell>
+                    <Table.Cell>{item?.status}</Table.Cell>
+                    <Table.Cell>
+                      ${item?.fundingGoal?.toLocaleString()}
+                    </Table.Cell>
+                    <Table.Cell>
+                      ${item?.minimumAmount?.toLocaleString()}
+                    </Table.Cell>
+                    <Table.Cell>{item?.deadline}</Table.Cell>
+                    <Table.Cell>
+                      <div className="flex gap-2">
+                        <Button variant="secondary" className="rounded-lg">
+                          Edit
+                        </Button>
+                        <Button variant="danger" className="rounded-lg">
+                          Delete
+                        </Button>
+                      </div>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
               </Table.Body>
             </Table.Content>
           </Table.ScrollContainer>
