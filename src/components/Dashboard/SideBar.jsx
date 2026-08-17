@@ -50,7 +50,9 @@ const SideBar = async () => {
           ? creator
           : role === "supporter"
             ? supporter
-            : admin}
+            : role === "admin"
+              ? admin
+              : null}
 
         {/* {creator} */}
       </div>

@@ -56,3 +56,18 @@ export const getALlUsers = async () => {
     throw error;
   }
 };
+
+export const getAdminCampaigns = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/getAdminCampaigns`,
+      {
+        cache: "no-store",
+      },
+    );
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching admin campaigns:", error);
+    throw error;
+  }
+};
