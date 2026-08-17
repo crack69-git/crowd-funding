@@ -44,6 +44,7 @@ const AddCampaign = ({ tiers, user }) => {
       CreatorName: user?.name,
       CreatorEmail: user?.email,
       TotalRaised: 0,
+      state: "pending",
     };
     console.log("Campaign Data to be posted:", campainData);
 

@@ -17,7 +17,7 @@ export default async function ExploreCampaign() {
         <Card
           key={campaign._id}
           sx={{ maxWidth: 345 }}
-          className={`border-t-8 ${campaign.status === "active" ? "border-green-500" : "border-red-500"} my-5`}
+          // className={`border-t-8 ${campaign.state === "pending" ? "border-yellow-500" : campaign.state === "approved" ? "border-green-500" : "border-red-500"} my-5`}
         >
           <CardMedia
             sx={{ height: 140 }}

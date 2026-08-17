@@ -1,5 +1,5 @@
 import dns from "dns";
-dns.setServers(["8.8.8.8"], ["8.8.4.4"]);
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
@@ -13,12 +13,12 @@ export const auth = betterAuth({
     enabled: true,
     rememberMe: true,
   },
-  // session: {
-  //   cookieCache: {
-  //     enabled: true,
-  //     maxAge: 60 * 60 * 24 * 7, // 7 days
-  //   },
-  // },
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    },
+  },
   database: mongodbAdapter(db, {
     client,
   }),

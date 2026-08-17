@@ -44,3 +44,15 @@ export const getAllCampaigns = async () => {
     throw error;
   }
 };
+
+export const getALlUsers = async () => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users`, {
+      cache: "no-store",
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching all users:", error);
+    throw error;
+  }
+};
