@@ -4,54 +4,75 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 
 import Typography from "@mui/material/Typography";
-import { Button, Label, ProgressBar } from "@heroui/react";
+import { Button, Chip, Label, ProgressBar, Separator } from "@heroui/react";
+import { getAllCampaigns } from "@/lib/actions/getSection";
+import { BiDollar } from "react-icons/bi";
 
-export default function ExploreCampaign() {
+export default async function ExploreCampaign() {
+  const campaigns = await getAllCampaigns();
+  console.log("Campaigns:", campaigns);
   return (
-    <Card sx={{ maxWidth: 345 }} className="border-t-4 border-green-600">
-      <CardMedia
-        sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
-      />
-      <CardContent>
-        <p className="font-semibold text-sm text-gray-600">
-          Deadline: 2023-12-31
-        </p>
-        <Typography gutterBottom variant="h5" component="div">
-          <div className="text-2xl font-bold text-gray-800">
-            Save the Rainforest
-          </div>
-        </Typography>
-        <div>
-          <p className="font-semibold">Creator: John Doe</p>
-        </div>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          <span className="text-gray-600 text-sm line-clamp-2">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </span>
-        </Typography>
-      </CardContent>
-      <ProgressBar
-        aria-label="Loading"
-        className="full w-11/12 mx-auto"
-        value={20}
-      >
-        <Label>
-          Fund Raised{" "}
-          <span className="text-gray-600">($10,000 of $50,000)</span>
-        </Label>
-        <ProgressBar.Output />
-        <ProgressBar.Track>
-          <ProgressBar.Fill />
-        </ProgressBar.Track>
-      </ProgressBar>
-      <CardActions>
-        <Button variant="primary" className="rounded-lg">
-          View Details
-        </Button>
-      </CardActions>
-    </Card>
+    <div>
+      {campaigns.map((campaign) => (
+        <Card
+          key={campaign._id}
+          sx={{ maxWidth: 345 }}
+          className={`border-t-8 ${campaign.status === "active" ? "border-green-500" : "border-red-500"} my-5`}
+        >
+          <CardMedia
+            sx={{ height: 140 }}
+            image="/static/images/cards/contemplative-reptile.jpg"
+            title="green iguana"
+          />
+          <CardContent>
+            <p className="font-semibold text-sm text-gray-600">
+              Deadline: {campaign.deadline}
+            </p>
+            <Typography gutterBottom variant="h5" component="div">
+              <div className="text-2xl font-bold text-gray-800">
+                {campaign.campaignTitle}
+              </div>
+            </Typography>
+
+            <div>
+              <Chip color="success">{campaign.tier}</Chip>
+              <p className="font-semibold text-gray-600">
+                Creator: {campaign.CreatorName}
+              </p>
+            </div>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              <span className="text-gray-600 text-sm line-clamp-2">
+                {campaign.description}
+              </span>
+            </Typography>
+          </CardContent>
+          <Separator className="my-2" />
+          <ProgressBar
+            aria-label="Loading"
+            className="full w-11/12 mx-auto"
+            value={(campaign.TotalRaised / campaign.fundingGoal) * 100}
+          >
+            <Label>
+              Fund Raised{" "}
+              <span className="text-gray-600 flex items-center">
+                <BiDollar />
+                {campaign.TotalRaised} out of
+                <BiDollar />
+                {campaign.fundingGoal}
+              </span>
+            </Label>
+            <ProgressBar.Output />
+            <ProgressBar.Track>
+              <ProgressBar.Fill />
+            </ProgressBar.Track>
+          </ProgressBar>
+          <CardActions>
+            <Button variant="primary" className="rounded-lg bg-green-900">
+              View Details
+            </Button>
+          </CardActions>
+        </Card>
+      ))}
+    </div>
   );
 }

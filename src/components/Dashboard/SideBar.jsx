@@ -46,9 +46,12 @@ const SideBar = async () => {
     <div className="flex flex-col  h-11/12 p-4 bg-gray-100 ">
       <h3 className="text-xl text-green-800 font-bold">Dashboard</h3>
       <div className="flex flex-col items-start mt-5 space-y-5 flex-grow">
-        {role === "Creator" && creator}
-        {role === "Supporter" && supporter}
-        {role === "Admin" && admin}
+        {role === "Creator"
+          ? creator
+          : role === "supporter"
+            ? supporter
+            : admin}
+
         {/* {creator} */}
       </div>
       <div>

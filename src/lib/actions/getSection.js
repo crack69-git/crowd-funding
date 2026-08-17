@@ -29,3 +29,18 @@ export const getMyCampaigns = async (id) => {
     throw error;
   }
 };
+
+export const getAllCampaigns = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/getallcampaigns`,
+      {
+        cache: "no-store",
+      },
+    );
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching all campaigns:", error);
+    throw error;
+  }
+};

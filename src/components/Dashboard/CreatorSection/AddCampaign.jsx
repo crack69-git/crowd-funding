@@ -43,6 +43,7 @@ const AddCampaign = ({ tiers, user }) => {
       creatorId: user?.id,
       CreatorName: user?.name,
       CreatorEmail: user?.email,
+      TotalRaised: 0,
     };
     console.log("Campaign Data to be posted:", campainData);
 

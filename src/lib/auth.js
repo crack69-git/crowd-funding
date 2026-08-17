@@ -13,10 +13,12 @@ export const auth = betterAuth({
     enabled: true,
     rememberMe: true,
   },
-  session: {
-    enabled: true,
-    expiresIn: 60 * 60 * 24 * 7,
-  },
+  // session: {
+  //   cookieCache: {
+  //     enabled: true,
+  //     maxAge: 60 * 60 * 24 * 7, // 7 days
+  //   },
+  // },
   database: mongodbAdapter(db, {
     client,
   }),

@@ -14,23 +14,27 @@ import React from "react";
 import { BsFillSendCheckFill } from "react-icons/bs";
 import { ImWarning } from "react-icons/im";
 
-const WithdrawalsSection = () => {
+const WithdrawalsSection = ({ totalRaised, data }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
   };
+  const equivalentValue = parseFloat(totalRaised / 20).toFixed(2);
   return (
     <div className="grid grid-cols-3 grid-rows-2 gap-5 w-full">
       <div className="border  grid-cols-1 p-5 rounded-lg">
-        <p className="font-bold text-lg">Total Earning</p>
+        <p className="font-bold text-lg">Total Raised</p>
         <p className="font-bold text-3xl text-green-700">
-          1250 <span className="text-gray-600 text-sm">credit raised</span>
+          {totalRaised}
+          <span className="text-gray-600 text-sm">credit raised</span>
         </p>
         <div className="border flex justify-between p-2 rounded-lg mt-5">
           <div>
             <p className="font-semibold text-gray-600">Equivalent Value</p>
-            <p className="text-lg font-bold text-gray-800">$ 1250</p>
+            <p className="text-lg font-bold text-gray-800">
+              ${equivalentValue}
+            </p>
           </div>
           <div>
             <p className="font-semibold text-gray-600">Market rate</p>

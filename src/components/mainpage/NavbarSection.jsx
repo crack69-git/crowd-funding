@@ -30,14 +30,8 @@ const NavbarSection = async () => {
           {user ? (
             <div className="flex items-center gap-2">
               <Chip color="success">Credit: {user.credit}</Chip>
-              <div className="w-10 h-10 rounded-full overflow-hidden border">
-                {/* <Image
-                  loading="lazy"
-                  src={image}
-                  alt="User Image"
-                  width={40}
-                  height={40}
-                /> */}
+              <div className="">
+                <p>{user.name}</p>
               </div>
               {role === "Creator" ? (
                 <Link href="/dashboard/creator">
