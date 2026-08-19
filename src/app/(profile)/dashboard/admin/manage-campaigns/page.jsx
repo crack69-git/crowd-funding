@@ -1,4 +1,5 @@
 import ApproveCampaign from "@/components/Dashboard/AdminSection/ApproveCampaign";
+import DeclineCampaign from "@/components/Dashboard/AdminSection/DeclineCampaign";
 import { getAdminCampaigns } from "@/lib/actions/getSection";
 import { Button, Separator, Table } from "@heroui/react";
 import React from "react";
@@ -26,7 +27,11 @@ const page = async () => {
                 <Table.Row key={campaign._id}>
                   <Table.Cell isRowHeader>{campaign.campaignTitle}</Table.Cell>
                   <Table.Cell>{campaign.CreatorName}</Table.Cell>
-                  <Table.Cell>{campaign.state}</Table.Cell>
+                  <Table.Cell
+                    className={`${campaign.state === "approved" ? "text-green-600" : "text-red-600"}`}
+                  >
+                    {campaign.state}
+                  </Table.Cell>
                   <Table.Cell>{campaign.TotalRaised}</Table.Cell>
                   <Table.Cell>
                     <div className="flex gap-2">
@@ -36,7 +41,7 @@ const page = async () => {
                       ) : (
                         <div>
                           <ApproveCampaign id={campaign._id} />
-                          <Button variant="secondary">Decline</Button>
+                          <DeclineCampaign id={campaign._id} />
                         </div>
                       )}
                     </div>
