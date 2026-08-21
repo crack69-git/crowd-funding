@@ -43,7 +43,9 @@ const PurchaseCredit = async () => {
                 {data?.length > 0 ? (
                   data.map((item, index) => (
                     <Table.Row key={index}>
-                      <Table.Cell>{item.paidAt}</Table.Cell>
+                      <Table.Cell>
+                        {item.paidAt !== "PAID" ? item.createdAt : item.paidAt}
+                      </Table.Cell>
                       <Table.Cell>{item.total_amount}</Table.Cell>
                       <Table.Cell>
                         <span className="flex items-center">
@@ -51,7 +53,7 @@ const PurchaseCredit = async () => {
                           {item.total_amount * 10}
                         </span>
                       </Table.Cell>
-                      <Table.Cell>{item.card_type}</Table.Cell>
+                      <Table.Cell>{item.card_type || "N/A"}</Table.Cell>
                       <Table.Cell className="text-green-700 text-bold">
                         {item.status}
                       </Table.Cell>

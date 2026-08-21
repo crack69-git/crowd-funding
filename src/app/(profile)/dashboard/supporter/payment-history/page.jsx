@@ -1,10 +1,19 @@
+import { getPaymentDetails } from "@/lib/actions/getSection";
+import { auth } from "@/lib/auth";
 import { Card, Table } from "@heroui/react";
+import { headers } from "next/headers";
 import React from "react";
 import { HiMiniCalendarDateRange } from "react-icons/hi2";
 import { ImCreditCard } from "react-icons/im";
 import { LuCircleDollarSign } from "react-icons/lu";
+import { TbCurrencyTaka } from "react-icons/tb";
 
-const page = () => {
+const page = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const data = await getPaymentDetails(session?.user?.email);
+  console.log("Payment details:", data);
   return (
     <div className="w-11/12 mx-auto">
       <div className="my-5">
@@ -58,13 +67,32 @@ const page = () => {
                 <Table.Column>Status</Table.Column>
               </Table.Header>
               <Table.Body>
-                <Table.Row>
-                  <Table.Cell>2023-10-01</Table.Cell>
-                  <Table.Cell>1000 Credit</Table.Cell>
-                  <Table.Cell>$80</Table.Cell>
-                  <Table.Cell>Visa ****1234</Table.Cell>
-                  <Table.Cell>Completed</Table.Cell>
-                </Table.Row>
+                {data?.length > 0 ? (
+                  data.map((item, index) => (
+                    <Table.Row key={index}>
+                      <Table.Cell>
+                        {item.paidAt !== "PAID" ? item.createdAt : item.paidAt}
+                      </Table.Cell>
+                      <Table.Cell>{item.total_amount}</Table.Cell>
+                      <Table.Cell>
+                        <span className="flex items-center">
+                          <TbCurrencyTaka />
+                          {item.total_amount * 10}
+                        </span>
+                      </Table.Cell>
+                      <Table.Cell>{item.card_type || "N/A"}</Table.Cell>
+                      <Table.Cell className="text-green-700 text-bold">
+                        {item.status}
+                      </Table.Cell>
+                    </Table.Row>
+                  ))
+                ) : (
+                  <Table.Row>
+                    <Table.Cell colSpan={5} className="text-center">
+                      No payment history available.
+                    </Table.Cell>
+                  </Table.Row>
+                )}
               </Table.Body>
             </Table.Content>
           </Table.ScrollContainer>
