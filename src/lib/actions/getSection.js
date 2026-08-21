@@ -71,3 +71,18 @@ export const getAdminCampaigns = async () => {
     throw error;
   }
 };
+
+export const getPaymentDetails = async (email) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/getOrders/${email}`,
+      {
+        cache: "no-store",
+      },
+    );
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching payment details:", error);
+    throw error;
+  }
+};

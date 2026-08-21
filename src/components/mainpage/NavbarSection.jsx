@@ -21,9 +21,14 @@ const NavbarSection = async () => {
               Crowd Fundly
             </h1>
           </Link>
-          <div className="flex items-center gap-4">
-            <p className="font-semibold">Explore Campaign</p>
-          </div>
+          <Link
+            href="/explore-campaign"
+            className="hover:bg-green-100 p-2 rounded-md"
+          >
+            <div className="flex items-center gap-4">
+              <p className="font-semibold">Explore Campaign</p>
+            </div>
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">

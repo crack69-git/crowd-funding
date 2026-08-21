@@ -1,139 +1,33 @@
-import { Table } from "@heroui/react";
+import { Button, Table } from "@heroui/react";
 import React from "react";
+import { TbCurrencyTaka } from "react-icons/tb";
+import CreditPurchase from "./CreditPurchase";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { getPaymentDetails } from "@/lib/actions/getSection";
+import Link from "next/link";
 
-const PurchaseCredit = () => {
+const PurchaseCredit = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+  const data = await getPaymentDetails(user?.email);
+  console.log("Payment details:", data);
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="flex flex-col  rounded-3xl border border-green-200 bg-green-50">
-          <div className="px-6 py-8 sm:p-10 sm:pb-6">
-            <div className="grid items-center justify-center w-full grid-cols-1 text-left">
-              <div>
-                <h2 className="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
-                  Starter
-                </h2>
-              </div>
-              <div className="mt-6">
-                <p>
-                  <span className="text-3xl tracking-tight text-gray-700 font-semibold">
-                    100 Credit
-                  </span>
-                  <span className="text-base font-medium text-gray-500">
-                    {" "}
-                    /$10{" "}
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex px-6 pb-8 sm:px-8">
-            <a
-              aria-describedby="tier-company"
-              className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-green-700 border-2  rounded-full nline-flex  hover:border-green-900  hover:text-white hover:bg-green-800"
-              href="#"
-            >
-              Purchase Credit
-            </a>
-          </div>
-        </div>
-        <div className="flex flex-col  rounded-3xl border bg-blue-50 border-blue-200">
-          <div className="px-6 py-8 sm:p-10 sm:pb-6">
-            <div className="grid items-center justify-center w-full grid-cols-1 text-left">
-              <div>
-                <h2 className="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
-                  Popular
-                </h2>
-              </div>
-              <div className="mt-6">
-                <p>
-                  <span className="text-3xl font-semibold tracking-tight text-gray-700">
-                    300 Credit
-                  </span>
-                  <span className="text-base font-medium text-gray-500">
-                    {" "}
-                    /$25{" "}
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex px-6 pb-8 sm:px-8">
-            <a
-              aria-describedby="tier-company"
-              className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200  border-2  rounded-full nline-flex bg-blue-700 hover:border-blue-800"
-              href="#"
-            >
-              Purchase Credit
-            </a>
-          </div>
-        </div>
-        <div className="flex flex-col  rounded-3xl border bg-yellow-50">
-          <div className="px-6 py-8 sm:p-10 sm:pb-6">
-            <div className="grid items-center justify-center w-full grid-cols-1 text-left">
-              <div>
-                <h2 className="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
-                  Medium
-                </h2>
-              </div>
-              <div className="mt-6">
-                <p>
-                  <span className="text-3xl font-semibold tracking-tight text-gray-700">
-                    800 Credit
-                  </span>
-                  <span className="text-base font-medium text-gray-500">
-                    {" "}
-                    /$60{" "}
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex px-6 pb-8 sm:px-8">
-            <a
-              aria-describedby="tier-company"
-              className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-yellow-700 border-2 rounded-full nline-flex  hover:border-yellow-800"
-              href="#"
-            >
-              Purchase Credit
-            </a>
-          </div>
-        </div>
-        <div className="flex flex-col  rounded-3xl border bg-red-50">
-          <div className="px-6 py-8 sm:p-10 sm:pb-6">
-            <div className="grid items-center justify-center w-full grid-cols-1 text-left">
-              <div>
-                <h2 className="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
-                  Premium
-                </h2>
-              </div>
-              <div className="mt-6">
-                <p>
-                  <span className="text-3xl font-semibold tracking-tight text-gray-700">
-                    1500 Credit
-                  </span>
-                  <span className="text-base font-medium text-gray-500">
-                    {" "}
-                    /$110{" "}
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex px-6 pb-8 sm:px-8">
-            <a
-              aria-describedby="tier-company"
-              className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-red-700 border-2  rounded-full nline-flex  hover:border-red-800"
-              href="#"
-            >
-              Purchase Credit
-            </a>
-          </div>
-        </div>
+      <div>
+        <CreditPurchase user={user}></CreditPurchase>
       </div>
       <div className="my-10">
         <div className="flex items-center justify-between mb-4">
           <p className="font-semibold">Payment History</p>
-          <p className="underline">View All</p>
+          <Link
+            href="/dashboard/supporter/payment-history"
+            className="text-sm text-gray-500 hover:text-gray-700"
+          >
+            <p className="underline">View All</p>
+          </Link>
         </div>
         <Table>
           <Table.ScrollContainer>
@@ -146,13 +40,30 @@ const PurchaseCredit = () => {
                 <Table.Column>Status</Table.Column>
               </Table.Header>
               <Table.Body>
-                <Table.Row>
-                  <Table.Cell>2023-10-01</Table.Cell>
-                  <Table.Cell>1000 Credit</Table.Cell>
-                  <Table.Cell>$80</Table.Cell>
-                  <Table.Cell>Visa ****1234</Table.Cell>
-                  <Table.Cell>Completed</Table.Cell>
-                </Table.Row>
+                {data?.length > 0 ? (
+                  data.map((item, index) => (
+                    <Table.Row key={index}>
+                      <Table.Cell>{item.paidAt}</Table.Cell>
+                      <Table.Cell>{item.total_amount}</Table.Cell>
+                      <Table.Cell>
+                        <span className="flex items-center">
+                          <TbCurrencyTaka />
+                          {item.total_amount * 10}
+                        </span>
+                      </Table.Cell>
+                      <Table.Cell>{item.card_type}</Table.Cell>
+                      <Table.Cell className="text-green-700 text-bold">
+                        {item.status}
+                      </Table.Cell>
+                    </Table.Row>
+                  ))
+                ) : (
+                  <Table.Row>
+                    <Table.Cell colSpan={5} className="text-center">
+                      No payment history available.
+                    </Table.Cell>
+                  </Table.Row>
+                )}
               </Table.Body>
             </Table.Content>
           </Table.ScrollContainer>
