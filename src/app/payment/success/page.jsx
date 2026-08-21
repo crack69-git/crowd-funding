@@ -1,4 +1,8 @@
+import { getUserByMail } from "@/lib/actions/getSection";
+import { patchUserInfo } from "@/lib/actions/patchSection";
+import { auth } from "@/lib/auth";
 import { Button, Card } from "@heroui/react";
+import { headers } from "next/headers";
 import Link from "next/link";
 import React from "react";
 import { BiHome } from "react-icons/bi";
@@ -19,6 +23,18 @@ const page = async ({ searchParams }) => {
       console.log("Order fetch response:", res);
       if (res.ok) {
         order = await res.json();
+        console.log("Order details:", order);
+        const session = await auth.api.getSession({
+          headers: await headers(),
+        });
+        const credits = session?.user?.credit;
+        let totalCredit = credits + order?.amount_converted;
+        console.log("Total credit after purchase:", totalCredit);
+        const updatedUser = await patchUserInfo(
+          session?.user?.email,
+          totalCredit,
+        );
+        console.log("User info updated:", updatedUser);
       }
     } catch (err) {
       console.error("Failed to load order:", err);

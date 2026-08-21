@@ -5,10 +5,12 @@ import React from "react";
 import { TbCurrencyTaka } from "react-icons/tb";
 
 const CreditPurchase = ({ user }) => {
-  const handleStarter = async () => {
+  const handlePayment = async (credit, amountConverted) => {
     try {
+      console.log("Initiating payment for:", credit, amountConverted);
       const data = {
-        total_amount: 10,
+        total_amount: amountConverted,
+        amount_converted: credit,
         product_name: "Starter",
         cus_name: user?.name,
         cus_email: user?.email,
@@ -53,7 +55,7 @@ const CreditPurchase = ({ user }) => {
         </div>
         <div className="flex px-6 pb-8 sm:px-8">
           <Button
-            onClick={handleStarter}
+            onClick={() => handlePayment(100, 10)}
             className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-green-700 border-2  rounded-full nline-flex  hover:border-green-900  hover:text-white hover:bg-green-800"
           >
             Purchase Credit
@@ -83,7 +85,10 @@ const CreditPurchase = ({ user }) => {
           </div>
         </div>
         <div className="flex px-6 pb-8 sm:px-8">
-          <Button className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-blue-700 border-2  rounded-full nline-flex  hover:border-blue-900  hover:text-white hover:bg-blue-800">
+          <Button
+            onClick={() => handlePayment(300, 25)}
+            className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-blue-700 border-2  rounded-full nline-flex  hover:border-blue-900  hover:text-white hover:bg-blue-800"
+          >
             Purchase Credit
           </Button>
         </div>
@@ -111,7 +116,10 @@ const CreditPurchase = ({ user }) => {
           </div>
         </div>
         <div className="flex px-6 pb-8 sm:px-8">
-          <Button className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-yellow-700 border-2  rounded-full nline-flex  hover:border-yellow-900  hover:text-white hover:bg-yellow-800">
+          <Button
+            onClick={() => handlePayment(800, 60)}
+            className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-yellow-700 border-2  rounded-full nline-flex  hover:border-yellow-900  hover:text-white hover:bg-yellow-800"
+          >
             Purchase Credit
           </Button>
         </div>
@@ -139,7 +147,10 @@ const CreditPurchase = ({ user }) => {
           </div>
         </div>
         <div className="flex px-6 pb-8 sm:px-8">
-          <Button className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-red-700 border-2  rounded-full nline-flex  hover:border-red-900  hover:text-white hover:bg-red-800">
+          <Button
+            onClick={() => handlePayment(1500, 110)}
+            className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-red-700 border-2  rounded-full nline-flex  hover:border-red-900  hover:text-white hover:bg-red-800"
+          >
             Purchase Credit
           </Button>
         </div>

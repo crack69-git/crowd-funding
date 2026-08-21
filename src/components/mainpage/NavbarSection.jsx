@@ -1,3 +1,4 @@
+import { getUserByMail } from "@/lib/actions/getSection";
 import { auth } from "@/lib/auth";
 import { Button, Chip } from "@heroui/react";
 import { headers } from "next/headers";
@@ -12,6 +13,9 @@ const NavbarSection = async () => {
   const user = session?.user;
   const role = user?.role;
   const image = user?.image;
+  const data = await getUserByMail(user?.email);
+  console.log("User data fetched:", data);
+  console.log(data?.credit);
   return (
     <div className="border-b">
       <div className="flex justify-between items-center w-11/12 mx-auto py-5 ">
@@ -34,7 +38,7 @@ const NavbarSection = async () => {
         <div className="flex items-center gap-2">
           {user ? (
             <div className="flex items-center gap-2">
-              <Chip color="success">Credit: {user.credit}</Chip>
+              <Chip color="success">Credit: {data?.credit}</Chip>
               <div className="">
                 <p>{user.name}</p>
               </div>

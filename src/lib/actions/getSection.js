@@ -86,3 +86,18 @@ export const getPaymentDetails = async (email) => {
     throw error;
   }
 };
+
+export const getUserByMail = async (email) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/getUserByMail/${email}`,
+      {
+        cache: "no-store",
+      },
+    );
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching user by email:", error);
+    throw error;
+  }
+};
