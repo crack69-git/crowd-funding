@@ -35,3 +35,19 @@ export const patchUserInfo = async (email, updatedData) => {
     throw error;
   }
 };
+
+export const getSingleCampaign = async (id) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/getSingleCampaign/${id}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching single campaign:", error);
+    throw error;
+  }
+};

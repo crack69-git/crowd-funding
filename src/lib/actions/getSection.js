@@ -101,3 +101,18 @@ export const getUserByMail = async (email) => {
     throw error;
   }
 };
+
+export const paymentHistory = async (email) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/paymentHistory/${email}`,
+      {
+        cache: "no-store",
+      },
+    );
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching payment history:", error);
+    throw error;
+  }
+};

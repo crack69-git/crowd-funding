@@ -10,6 +10,8 @@ import {
   Typography,
 } from "@heroui/react";
 import { CardActions, CardMedia } from "@mui/material";
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { BiDollar } from "react-icons/bi";
 
@@ -22,19 +24,22 @@ const page = async () => {
         Explore Active Campaigns
       </h3>
       <Separator className="my-5" />
-      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 items-center justify-center mx-auto md:grid-cols-2 lg:grid-cols-3 gap-5">
         {campaigns.map((campaign) => (
           <Card key={campaign._id} sx={{ maxWidth: 345 }} className="border">
-            <CardMedia
-              sx={{ height: 140 }}
-              image="/static/images/cards/contemplative-reptile.jpg"
-              title="green iguana"
-            />
+            <div className="relative h-48 w-full">
+              <Image
+                loading="lazy"
+                src={campaign.campaignImage}
+                alt={campaign.campaignTitle}
+                fill
+              />
+            </div>
             <CardContent>
               <span className="font-semibold text-sm text-gray-600">
                 Deadline: {campaign.deadline}
               </span>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography variant="h5" component="div">
                 <span className="text-2xl font-bold text-gray-800">
                   {campaign.campaignTitle}
                 </span>
@@ -73,9 +78,11 @@ const page = async () => {
               </ProgressBar.Track>
             </ProgressBar>
             <CardActions>
-              <Button variant="primary" className="rounded-lg bg-green-900">
-                View Details
-              </Button>
+              <Link href={`/explore-campaign/${campaign._id}`}>
+                <Button variant="primary" className="rounded-lg bg-green-900">
+                  View Details
+                </Button>
+              </Link>
             </CardActions>
           </Card>
         ))}

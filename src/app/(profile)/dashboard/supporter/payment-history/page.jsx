@@ -1,4 +1,4 @@
-import { getPaymentDetails } from "@/lib/actions/getSection";
+import { getPaymentDetails, paymentHistory } from "@/lib/actions/getSection";
 import { auth } from "@/lib/auth";
 import { Card, Table } from "@heroui/react";
 import { headers } from "next/headers";
@@ -13,12 +13,16 @@ const page = async () => {
     headers: await headers(),
   });
   const data = await getPaymentDetails(session?.user?.email);
-  console.log("Payment details:", data);
+  const res = await paymentHistory(session?.user?.email);
+  console.log("Payment History Data:", res); // Log the payment history data for debugging
+  const date = new Date(data[0]?.paidAt);
+  const formattedDate = date.toLocaleDateString("en-GB");
+  console.log("Formatted Date:", formattedDate);
   return (
     <div className="w-11/12 mx-auto">
       <div className="my-5">
         <p className="font-semibold mb-2 text-lg">Payment History</p>
-        <div className="grid grid-cols-3 mb-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-5 gap-4">
           <Card className="w-full" variant="default">
             <Card.Header>
               <Card.Title className="text-lg">
@@ -26,9 +30,9 @@ const page = async () => {
               </Card.Title>
             </Card.Header>
             <Card.Content>
-              <p className="text-2xl font-bold flex items-center gap-2 text-gray-600">
+              <p className="max-[800px]:text-lg text-2xl font-bold flex items-center gap-2 text-gray-600">
                 <ImCreditCard className="text-green-700" />
-                12500
+                {res?.totalCreditPurchased || 0}
               </p>
             </Card.Content>
           </Card>
@@ -37,9 +41,9 @@ const page = async () => {
               <Card.Title className="text-lg">Total Amount Spent</Card.Title>
             </Card.Header>
             <Card.Content>
-              <p className="text-2xl font-bold flex items-center gap-2 text-gray-600">
+              <p className="max-[800px]:text-lg text-2xl font-bold flex items-center gap-2 text-gray-600">
                 <LuCircleDollarSign className="text-yellow-600" />
-                $1250.00
+                {res?.totalAmountSpent || 0}
               </p>
             </Card.Content>
           </Card>
@@ -48,9 +52,9 @@ const page = async () => {
               <Card.Title className="text-lg">Latest Transaction</Card.Title>
             </Card.Header>
             <Card.Content>
-              <p className="text-2xl font-bold flex items-center gap-2 text-gray-600">
+              <p className="max-[800px]:text-lg text-2xl font-bold flex items-center gap-2 text-gray-600">
                 <HiMiniCalendarDateRange className="text-blue-600" />
-                2026-01-15
+                {formattedDate || "N/A"}
               </p>
             </Card.Content>
           </Card>

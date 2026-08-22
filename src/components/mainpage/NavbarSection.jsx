@@ -14,8 +14,7 @@ const NavbarSection = async () => {
   const role = user?.role;
   const image = user?.image;
   const data = await getUserByMail(user?.email);
-  console.log("User data fetched:", data);
-  console.log(data?.credit);
+
   return (
     <div className="border-b">
       <div className="flex justify-between items-center w-11/12 mx-auto py-5 ">
